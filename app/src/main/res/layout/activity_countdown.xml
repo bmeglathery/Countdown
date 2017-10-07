@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="3"
+        android:columnCount="4"
+        android:layout_gravity="center"
+        tools:context=".CountdownActivity">
+
+        <!-- In order to return a value from CountdownActivity, I had to add:
+             xmlns:tools="http://schemas.android.com/tools"
+             tools:context=".CountdownActivity" -->
+
+        <TextView
+            android:id="@+id/daysRemainingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/text_view_margin"
+            android:text="@string/init_time"
+            android:textColor="@color/timeColor"
+            android:textSize="@dimen/time_size"/>
+
+        <TextView
+            android:id="@+id/hrsRemainingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/text_view_margin"
+            android:text="@string/init_time"
+            android:textColor="@color/timeColor"
+            android:textSize="@dimen/time_size"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/text_view_margin"
+            android:id="@+id/minsRemainingView"
+            android:text="@string/init_time"
+            android:textColor="@color/timeColor"
+            android:textSize="@dimen/time_size"/>
+
+        <TextView
+            android:id="@+id/secsRemainingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/text_view_margin"
+            android:text="@string/init_time"
+            android:textColor="@color/timeColor"
+            android:textSize="@dimen/time_size"/>
+
+        <TextView
+            android:id="@+id/daysLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/days_label"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label_size"/>
+
+        <TextView
+            android:id="@+id/hoursLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/text_view_margin"
+            android:text="@string/hrs_label"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label_size"/>
+
+        <TextView
+            android:id="@+id/minutesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/text_view_margin"
+            android:text="@string/mins_label"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label_size"/>
+
+        <TextView
+            android:id="@+id/secondsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/text_view_margin"
+            android:text="@string/secs_label"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label_size"/>
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/gridLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/return_button"
+        android:onClick="buttonClickHandler"/>
+
+</android.support.constraint.ConstraintLayout>
