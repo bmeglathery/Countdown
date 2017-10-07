@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/resume_button"
-            android:onClick="startCountDown" />
+            android:onClick="resumeCountDown" />
 
     </LinearLayout>
 
@@ -74,19 +74,19 @@
             android:layout_weight="1"/>
 
         <RadioButton
-            android:id="@+id/timer1"
+            android:id="@+id/rb1"
             android:layout_weight="1"
             android:text="@string/timer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton
-            android:id="@+id/timer2"
+            android:id="@+id/rb2"
             android:layout_weight="1"
             android:text="@string/timer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton
-            android:id="@+id/timer3"
+            android:id="@+id/rb3"
             android:layout_weight="1"
             android:text="@string/timer3"
             android:layout_width="wrap_content"
