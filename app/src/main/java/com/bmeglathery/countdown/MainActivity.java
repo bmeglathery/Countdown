@@ -3,8 +3,6 @@ package com.bmeglathery.countdown;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,9 +14,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Random;
+import java.util.Timer;
 
 /**
  * Provides event handler for button in the user interface, which
@@ -36,25 +32,17 @@ public class MainActivity extends AppCompatActivity {
     //For receiving info from CountdownActivity
     public static final int REQUEST_CODE = 1234;
 
+    private TimerState timer1 = new TimerState();
+    private TimerState timer2 = new TimerState();
+    private TimerState timer3 = new TimerState();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-
-        View viewToLoad = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
-        this.setContentView(viewToLoad);
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
 
@@ -82,23 +70,13 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(HOUR, tp.getHour());
         intent.putExtra(MINUTE, tp.getMinute());
 
+
         /*
          * WARNING: This will cause the launched activity to
          * crash unless we have added an activity entry in the
          * manifest for CountdownActivity!
          */
         startActivityForResult(intent, REQUEST_CODE);
-    }
-
-    /**
-     * Illustrating IMPLICIT intent
-     */
-    public void websiteClickHandler(View view){
-        // Use URI class in Android.net, not Java API
-        Uri webpage = Uri.parse("http://www.kotaku.com/");
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-
-        startActivity(intent);
     }
 
     @Override
@@ -123,26 +101,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    public void resetPickers(View view) {
-        Toast.makeText(this, "Resetting Pickers...", Toast.LENGTH_SHORT).show();
-        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
-        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
-        Calendar now = new GregorianCalendar();
-
-        int y = now.get(Calendar.YEAR);
-        int m = now.get(Calendar.MONTH);
-        int d = now.get(Calendar.DAY_OF_MONTH);
-        dp.updateDate(y, m, d);
-
-        // To save my life, I cannot figure out why this does not work. HELP ME!
-        int hr = now.get(Calendar.HOUR);
-        Log.d("RESET_PICKERS", "hr: " + hr);
-        int min = now.get(Calendar.MINUTE);
-        Log.d("RESET_PICKERS", "min: " + min);
-
-        tp.setHour(hr);
-        tp.setMinute(min);
-    }
-    */
 }

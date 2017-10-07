@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ public class CountdownActivity extends AppCompatActivity {
     private int hrsRemaining;
     private int minsRemaining;
     private int secsRemaining;
+    private long event_time_ms;
 
     private static final DecimalFormat f = new DecimalFormat("00");
 
@@ -41,13 +44,36 @@ public class CountdownActivity extends AppCompatActivity {
         int hours = extras.getInt(MainActivity.HOUR);
         int mins = extras.getInt(MainActivity.MINUTE);
 
+        ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.parentConstraintLayout);
+
+        /**
+         * Android DatePicker indexes months starting at 0,
+         * so December is 11, October is 9, and April is 3
+         */
+        if(month == 11 && days == 25)
+            cl.setBackgroundResource(R.drawable.christmas_bg);
+        else if (month == 9 && days == 31) {
+            //Toast.makeText(this, "Halloween!", Toast.LENGTH_SHORT).show();
+            cl.setBackgroundResource(R.drawable.halloween_bg);
+        }
+        /**
+         * Easter Sunday for the year 2018 is on April 1st
+         * If modifying this code for long-term use, calculations
+         * to determine which day Easter Sunday falls on can be found
+         * online.
+         */
+        else if (month == 3 && days == 1)
+            cl.setBackgroundResource(R.drawable.easter_bg);
+
+
         // Calculate time in seconds from now until event...
         GregorianCalendar later = new GregorianCalendar(year, month, days, hours, mins);
         GregorianCalendar now = new GregorianCalendar();
 
         long eventTime = later.getTimeInMillis();
+        event_time_ms = eventTime;
         long nowTime = now.getTimeInMillis();
-        long diffSecs = (long) ((eventTime - nowTime) / 1000);
+        long diffSecs = (eventTime - nowTime) / 1000;
 
         // Calculate time remaining until event
         final int SECS_PER_DAY = 86400;
@@ -108,11 +134,6 @@ public class CountdownActivity extends AppCompatActivity {
 
         MyTimer timer = new MyTimer();
         timer.start();
-
-        // Code-based approach to return to parent activity via
-        // up button.
-        ActionBar aBar = getSupportActionBar();
-        aBar.setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -123,8 +144,13 @@ public class CountdownActivity extends AppCompatActivity {
         Intent i = getIntent();
         GregorianCalendar time_remaining_gc =
                 new GregorianCalendar(daysRemaining/365, daysRemaining, hrsRemaining, minsRemaining, secsRemaining);
-        long millis_remaining = time_remaining_gc.getTimeInMillis();
-        i.putExtra(RESULT_MESSAGE, daysRemaining + " days remaining.");
+
+        GregorianCalendar now = new GregorianCalendar();
+
+        long millis_remaining = event_time_ms - now.getTimeInMillis();
+        int seconds_remaining = (int) (millis_remaining / 1000);
+
+        i.putExtra(RESULT_MESSAGE, seconds_remaining + " seconds remaining.");
         setResult(Activity.RESULT_OK, i);
         finish();
     }

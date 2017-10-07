@@ -25,34 +25,74 @@
         android:id="@id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/countdown_button"
+        app:layout_constraintBottom_toTopOf="@+id/button_row"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/datePicker"
         android:headerBackground="@color/colorPrimary"/>
 
-    <Button
-        android:id="@id/countdown_button"
+    <LinearLayout
+        android:id="@id/button_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timePicker"
-        app:layout_constraintBottom_toTopOf="parent"
-        android:text="@string/countdown_button_text"
-        android:onClick="startCountDown" />
+        app:layout_constraintBottom_toTopOf="@+id/radioButtons"
+        android:orientation="horizontal">
 
-    <!--
-    <Button
-        android:id="@id/reset_button"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/countdown_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/countdown_button_text"
+            android:onClick="startCountDown" />
+
+        <Button
+            android:id="@id/countdown_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resume_button"
+            android:onClick="startCountDown" />
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@id/radioButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/countdown_button"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timePicker"
-        app:layout_constraintBaseline_toBaselineOf="@id/countdown_button"
-        android:text="@string/reset_button_text"
-        android:onClick="resetPickers" />
-        -->
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintTop_toBottomOf="@id/button_row"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/timer1"
+            android:layout_weight="1"
+            android:text="@string/timer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/timer2"
+            android:layout_weight="1"
+            android:text="@string/timer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/timer3"
+            android:layout_weight="1"
+            android:text="@string/timer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
