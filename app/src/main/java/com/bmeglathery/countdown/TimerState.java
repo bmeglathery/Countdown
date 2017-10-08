@@ -7,25 +7,20 @@ package com.bmeglathery.countdown;
 
 public class TimerState {
 
-    private String timerName = "Countdown";
-    private int secondsRemaining;
+    private String timerName;
     private long eventTarget;
-    private String holidayBackground = "";
+    private String holidayBackground;
 
     public TimerState(){
-        secondsRemaining = 0;
+        timerName = "Countdown";
+        eventTarget = 0;
+        holidayBackground = "";
     }
 
-    public TimerState(int s){
-        secondsRemaining = s;
-    }
-
-    public void setSecs(int s){
-        secondsRemaining = s;
-    }
-
-    public int getSecs(){
-        return secondsRemaining;
+    public TimerState(String name, long target, String bg){
+        timerName = name;
+        eventTarget = target;
+        holidayBackground = bg;
     }
 
     public void setEventTarget(long target){

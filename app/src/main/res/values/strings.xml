@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Countdown</string>
     <string name="action_settings">Settings</string>
+    <string name="rename_timer">Rename Selected Timer</string>
     <string name="title_activity_countdown">CountdownActivity</string>
     <string name="init_time">00</string>
 
@@ -8,10 +9,12 @@
     <string name="hrs_label">HRS</string>
     <string name="mins_label">MINS</string>
     <string name="secs_label">SECS</string>
+    <string name="timer_name_label">Timer Name:</string>
+    <string name="timer_name_hint">Birthday!</string>
 
     <string name="countdown_button_text">Start Countdown</string>
     <string name="resume_button">Resume Countdown</string>
-    <string name="return_button">Return</string>
+    <string name="return_button">Save and Return</string>
 
     <string name="timer1">Event 1</string>
     <string name="timer2">Event 2</string>

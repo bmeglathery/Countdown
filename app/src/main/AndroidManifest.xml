@@ -27,9 +27,13 @@
         By declaring the MainActivity to be the parent of CountdownActivity,
         the user can navigate back to the parent using the up icon in the
         action bar (otherwise, the system Back button would be needed).
+
+        Discovered the windowSoftInputMode attribute via the following link:
+        https://stackoverflow.com/questions/1555109/stop-edittext-from-gaining-focus-at-activity-startup
         -->
-        <activity android:name=".CountdownActivity"
-            android:parentActivityName=".MainActivity">
+        <activity
+            android:name=".CountdownActivity"
+            android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
 

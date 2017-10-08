@@ -1,5 +1,6 @@
 package com.bmeglathery.countdown;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -40,11 +42,23 @@ public class MainActivity extends AppCompatActivity {
     private TimerState timer2 = new TimerState();
     private TimerState timer3 = new TimerState();
 
+    private RadioButton rb1;
+    private RadioButton rb2;
+    private RadioButton rb3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        rb1 = (RadioButton) findViewById(R.id.rb1);
+        rb2 = (RadioButton) findViewById(R.id.rb2);
+        rb3 = (RadioButton) findViewById(R.id.rb3);
+
+        rb1.setText(timer1.getTimerName());
+        rb2.setText(timer2.getTimerName());
+        rb3.setText(timer3.getTimerName());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,14 +77,20 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == TIMER_1 && resultCode == RESULT_OK){
             timer1.setEventTarget(data.getLongExtra("Event_Target", 0));
             timer1.setHolidayBackground(data.getStringExtra("Background"));
+            timer1.setTimerName(data.getStringExtra("TimerName"));
+            rb1.setText(timer1.getTimerName());
 
         } else if(requestCode == TIMER_2 && resultCode == RESULT_OK){
             timer2.setEventTarget(data.getLongExtra("Event_Target", 0));
             timer2.setHolidayBackground(data.getStringExtra("Background"));
+            timer2.setTimerName(data.getStringExtra("TimerName"));
+            rb2.setText(timer2.getTimerName());
 
         } else if(requestCode == TIMER_3 && resultCode == RESULT_OK){
             timer3.setEventTarget(data.getLongExtra("Event_Target", 0));
             timer3.setHolidayBackground(data.getStringExtra("Background"));
+            timer3.setTimerName(data.getStringExtra("TimerName"));
+            rb3.setText(timer3.getTimerName());
 
         } else {
             Toast.makeText(this, "Something went wrong...", Toast.LENGTH_SHORT).show();
@@ -144,10 +164,12 @@ public class MainActivity extends AppCompatActivity {
 
         long event = timer.getEventTarget();
         String background = timer.getHolidayBackground();
+        String timerName = timer.getTimerName();
 
         Intent intent = new Intent(this, CountdownActivity.class);
         intent.putExtra("Background", background);
         intent.putExtra("EventTime", event);
+        intent.putExtra("TimerName", timerName);
         intent.putExtra("Resumed", true);
 
         startActivityForResult(intent, timerRequest);

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,10 @@ public class CountdownActivity extends AppCompatActivity {
         if(background == null)
             background = "";
         long resumedEventTime = extras.getLong("EventTime");
+        String timerName = extras.getString("TimerName");
 
+        EditText editor = (EditText) findViewById(R.id.timerEdit);
+        editor.setText(timerName);
         RelativeLayout cl = (RelativeLayout) findViewById(R.id.surroundingLayout);
 
         /**
@@ -156,16 +161,18 @@ public class CountdownActivity extends AppCompatActivity {
     }
 
     /**
-     * Our CountdownActivity has no button, but if it did then we could
-     * handle a click here and return an intent to the parent activity.
+     * Save and Return button safely returns the user to the <code>MainActivity</code>,
+     * and stores the user's selected in the <code>TimerState</code> associated
+     * with the <code>RadioButton</code> selected.
      */
     public void buttonClickHandler(View view){
         Intent i = getIntent();
-
-        GregorianCalendar now = new GregorianCalendar();
+        EditText text = (EditText) findViewById(R.id.timerEdit);
+        String timerName = text.getText().toString();
 
         i.putExtra("Event_Target", event_time_ms);
         i.putExtra("Background", background);
+        i.putExtra("TimerName", timerName);
         setResult(Activity.RESULT_OK, i);
         finish();
     }
