@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.GregorianCalendar;
@@ -67,7 +65,6 @@ public class CountdownActivity extends AppCompatActivity {
             background = "Christmas";
         }
         else if (month == 9 && days == 31 || background.equalsIgnoreCase("Halloween")) {
-            //Toast.makeText(this, "Halloween!", Toast.LENGTH_SHORT).show();
             cl.setBackgroundResource(R.drawable.halloween_bg);
             background = "Halloween";
         }
