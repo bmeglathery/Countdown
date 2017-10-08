@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.GregorianCalendar;
 import java.util.Timer;
 
 /**
@@ -78,22 +79,25 @@ public class MainActivity extends AppCompatActivity {
             timer1.setEventTarget(data.getLongExtra("Event_Target", 0));
             timer1.setHolidayBackground(data.getStringExtra("Background"));
             timer1.setTimerName(data.getStringExtra("TimerName"));
-            rb1.setText(timer1.getTimerName());
+            if(!timer1.getTimerName().equals(""))
+                rb1.setText(timer1.getTimerName());
 
         } else if(requestCode == TIMER_2 && resultCode == RESULT_OK){
             timer2.setEventTarget(data.getLongExtra("Event_Target", 0));
             timer2.setHolidayBackground(data.getStringExtra("Background"));
             timer2.setTimerName(data.getStringExtra("TimerName"));
-            rb2.setText(timer2.getTimerName());
+            if(!timer2.getTimerName().equals(""))
+                rb2.setText(timer2.getTimerName());
 
         } else if(requestCode == TIMER_3 && resultCode == RESULT_OK){
             timer3.setEventTarget(data.getLongExtra("Event_Target", 0));
             timer3.setHolidayBackground(data.getStringExtra("Background"));
             timer3.setTimerName(data.getStringExtra("TimerName"));
-            rb3.setText(timer3.getTimerName());
+            if(!timer3.getTimerName().equals(""))
+                rb3.setText(timer3.getTimerName());
 
         } else {
-            Toast.makeText(this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select a future point in time.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -163,16 +167,25 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Countdown", "An error occurred in resumeCountDown");
 
         long event = timer.getEventTarget();
-        String background = timer.getHolidayBackground();
-        String timerName = timer.getTimerName();
+        GregorianCalendar now = new GregorianCalendar();
+        long currentSeconds = now.getTimeInMillis() / 1000;
 
-        Intent intent = new Intent(this, CountdownActivity.class);
-        intent.putExtra("Background", background);
-        intent.putExtra("EventTime", event);
-        intent.putExtra("TimerName", timerName);
-        intent.putExtra("Resumed", true);
+        if(event / 1000 - currentSeconds < 0)
+            Toast.makeText(this, "Your countdown ended while you were away...", Toast.LENGTH_SHORT).show();
+        else if(event == 0)
+            Toast.makeText(this, "You cannot resume a timer which has not been started!", Toast.LENGTH_SHORT).show();
+        else {
+            String background = timer.getHolidayBackground();
+            String timerName = timer.getTimerName();
 
-        startActivityForResult(intent, timerRequest);
+            Intent intent = new Intent(this, CountdownActivity.class);
+            intent.putExtra("Background", background);
+            intent.putExtra("EventTime", event);
+            intent.putExtra("TimerName", timerName);
+            intent.putExtra("Resumed", true);
+
+            startActivityForResult(intent, timerRequest);
+        }
     }
 
     @Override
