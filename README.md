@@ -4,4 +4,3 @@ The user may begin up to three 'Countdown' timers, with the target date/time sel
 
 ### Known Bugs
 [10/7/17] User cannot select a date more than about 2 and a half months past the current date..
-Selecting "Resume Countdown" without having a stored state will show a countdown of some negative 17000 days..
