@@ -9,8 +9,6 @@
     tools:context="com.bmeglathery.countdown.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!-- pickers do not look right in the emulator -->
-
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
@@ -92,7 +90,6 @@
             android:text="@string/timer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
 
     </RadioGroup>
 

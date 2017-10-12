@@ -17,17 +17,20 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:descendantFocusability="beforeDescendants">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/timer_name_label"
             android:textSize="@dimen/label_size"/>
+
         <EditText
             android:id="@+id/timerEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/timer_name_hint"
             android:textSize="@dimen/label_size"/>
+
     </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -77,11 +80,11 @@
                 android:textSize="@dimen/time_size"/>
 
             <TextView
+                android:id="@+id/minsRemainingView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/text_view_margin"
-                android:id="@+id/minsRemainingView"
                 android:text="@string/init_time"
                 android:textColor="@color/timeColor"
                 android:textSize="@dimen/time_size"/>

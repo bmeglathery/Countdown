@@ -13,18 +13,23 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.GregorianCalendar;
 
+import static com.bmeglathery.countdown.MainActivity.BACKGROUND;
+import static com.bmeglathery.countdown.MainActivity.DEBUG;
+import static com.bmeglathery.countdown.MainActivity.EVENT_TIME;
+import static com.bmeglathery.countdown.MainActivity.TIMER_NAME;
+
 /**
  * Displays a countdown to a future event. The starting time
  * is initialized using intent extras.
  */
-
 public class CountdownActivity extends AppCompatActivity {
 
     private int daysRemaining;
     private int hrsRemaining;
     private int minsRemaining;
     private int secsRemaining;
-    private long event_time_ms;
+    private long eventTime;
+    private long leftOver;
     private String background;
 
     private static final DecimalFormat f = new DecimalFormat("00");
@@ -38,23 +43,28 @@ public class CountdownActivity extends AppCompatActivity {
         setContentView(R.layout.activity_countdown);
 
         Bundle extras = getIntent().getExtras();
-        boolean resumed = extras.getBoolean("Resumed");
 
         int year = extras.getInt(MainActivity.YEAR);
         int month = extras.getInt(MainActivity.MONTH);
         int days = extras.getInt(MainActivity.DAY);
         int hours = extras.getInt(MainActivity.HOUR);
-        int mins = extras.getInt(MainActivity.MINUTE);
+        int minutes = extras.getInt(MainActivity.MINUTE);
+
+        boolean isResumed = extras.getBoolean("Resumed");
+
+        long resumedEventTime = extras.getLong("EventTime");
+        long diffSecs;
+
+        String timerName = extras.getString("TimerName");
+        GregorianCalendar now = new GregorianCalendar();
 
         background = extras.getString("Background");
         if(background == null)
             background = "";
-        long resumedEventTime = extras.getLong("EventTime");
-        String timerName = extras.getString("TimerName");
 
+        RelativeLayout cl = (RelativeLayout) findViewById(R.id.surroundingLayout);
         EditText editor = (EditText) findViewById(R.id.timerEdit);
         editor.setText(timerName);
-        RelativeLayout cl = (RelativeLayout) findViewById(R.id.surroundingLayout);
 
         /**
          * Android DatePicker indexes months starting at 0,
@@ -69,7 +79,7 @@ public class CountdownActivity extends AppCompatActivity {
             background = "Halloween";
         }
         /**
-         * Easter Sunday for the year 2018 is on April 1st
+         * Easter Sunday for the year 2018 is on April 1st.
          * If modifying this code for long-term use, calculations
          * to determine which day Easter Sunday falls on can be found
          * online.
@@ -77,37 +87,34 @@ public class CountdownActivity extends AppCompatActivity {
         else if (month == 3 && days == 1 || background.equalsIgnoreCase("Easter")) {
             cl.setBackgroundResource(R.drawable.easter_bg);
             background = "Easter";
+        } else {
+            //It's not one of the cool holidays, so the user sees a default background.
         }
 
-        long diffSecs;
-        GregorianCalendar now = new GregorianCalendar();
-        long eventTime;
-
-        if(!resumed) {
+        // Check if the timer is being resumed - if so, pass value stored earlier,
+        // otherwise build a <code>GregorianCalender</code> with the passed values
+        if(!isResumed) {
             // Calculate time in seconds from now until event...
-            GregorianCalendar later = new GregorianCalendar(year, month, days, hours, mins);
-
+            GregorianCalendar later = new GregorianCalendar(year, month, days, hours, minutes);
             eventTime = later.getTimeInMillis();
         } else {
             eventTime = resumedEventTime;
         }
-            event_time_ms = eventTime;
-            long nowTime = now.getTimeInMillis();
-            diffSecs = (eventTime - nowTime) / 1000;
 
-            // Calculate time remaining until event
+        long nowTime = now.getTimeInMillis();
+        diffSecs = (eventTime - nowTime) / 1000;
 
-            daysRemaining = (int) diffSecs / SECS_PER_DAY;
-            long leftOver = diffSecs - daysRemaining * SECS_PER_DAY;
+        // Calculate time remaining until event
+        daysRemaining = (int) diffSecs / SECS_PER_DAY;
+        leftOver = diffSecs - daysRemaining * SECS_PER_DAY;
 
-            hrsRemaining = (int) leftOver / 3600;
-            leftOver -= hrsRemaining * 3600;
+        hrsRemaining = (int) leftOver / 3600;
+        leftOver -= hrsRemaining * 3600;
 
-            minsRemaining = (int) leftOver / 60;
-            leftOver -= minsRemaining * 60;
+        minsRemaining = (int) leftOver / 60;
+        leftOver -= minsRemaining * 60;
 
-            secsRemaining = (int) leftOver;
-
+        secsRemaining = (int) leftOver;
 
         // get references to TextViews and initialize
         final TextView daysView = (TextView) findViewById(R.id.daysRemainingView);
@@ -115,13 +122,12 @@ public class CountdownActivity extends AppCompatActivity {
         final TextView minsView = (TextView) findViewById(R.id.minsRemainingView);
         final TextView secsView = (TextView) findViewById(R.id.secsRemainingView);
 
-
         class MyTimer extends CountDownTimer{
 
+            //The long representation of the number of milliseconds is sometimes negative,
+            //causing issues within 25 day periods of time. I cannot figure out a solution to this
+            //problem...
             public MyTimer() {
-                // Constructor:
-                // Number of milliseconds begin counting down from,
-                // Every 1000 ms, onTick event occurs
                 super((secsRemaining + (60 * minsRemaining)
                         + (3600 * hrsRemaining) + (SECS_PER_DAY * daysRemaining)) * 1000, 1000);
             }
@@ -158,7 +164,7 @@ public class CountdownActivity extends AppCompatActivity {
     }
 
     /**
-     * Save and Return button safely returns the user to the <code>MainActivity</code>,
+     * 'Save and Return' button safely returns the user to the <code>MainActivity</code>,
      * and stores the user's selected in the <code>TimerState</code> associated
      * with the <code>RadioButton</code> selected.
      */
@@ -167,9 +173,9 @@ public class CountdownActivity extends AppCompatActivity {
         EditText text = (EditText) findViewById(R.id.timerEdit);
         String timerName = text.getText().toString();
 
-        i.putExtra("Event_Target", event_time_ms);
-        i.putExtra("Background", background);
-        i.putExtra("TimerName", timerName);
+        i.putExtra(EVENT_TIME, eventTime);
+        i.putExtra(BACKGROUND, background);
+        i.putExtra(TIMER_NAME, timerName);
         setResult(Activity.RESULT_OK, i);
         finish();
     }
