@@ -19,9 +19,11 @@ import android.widget.Toast;
 import java.util.GregorianCalendar;
 
 /**
- * Provides event handler for button in the user interface, which
+ * Provides event handler for buttons in the user interface, which
  * creates an intent with extras from date and time pickers. The
  * intent is used in launching a new activity to display a countdown.
+ *
+ * @author Brandon Meglathery
  */
 public class MainActivity extends AppCompatActivity {
 

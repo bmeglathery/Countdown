@@ -4,7 +4,6 @@ package com.bmeglathery.countdown;
  * Helper class designed to store and retrieve pertinent information
  * related to the user's countdown timers.
  */
-
 public class TimerState {
 
     private String timerName;
