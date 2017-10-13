@@ -78,6 +78,10 @@ public class CountdownActivity extends AppCompatActivity {
             cl.setBackgroundResource(R.drawable.halloween_bg);
             background = "Halloween";
         }
+        else if (month == 10 || background.equalsIgnoreCase("Fall")) {
+            cl.setBackgroundResource(R.drawable.fall_bg);
+            background = "Fall";
+        }
         /**
          * Easter Sunday for the year 2018 is on April 1st.
          * If modifying this code for long-term use, calculations
