@@ -38,7 +38,7 @@ public class CountdownActivity extends AppCompatActivity {
     public static final int SECS_PER_DAY = 86400;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countdown);
 
@@ -59,7 +59,7 @@ public class CountdownActivity extends AppCompatActivity {
         GregorianCalendar now = new GregorianCalendar();
 
         background = extras.getString("Background");
-        if(background == null)
+        if (background == null)
             background = "";
 
         RelativeLayout cl = (RelativeLayout) findViewById(R.id.surroundingLayout);
@@ -70,15 +70,13 @@ public class CountdownActivity extends AppCompatActivity {
          * Android DatePicker indexes months starting at 0,
          * so December is 11, October is 9, and April is 3
          */
-        if(month == 11 && days == 25 || background.equalsIgnoreCase("Christmas")) {
+        if (month == 11 && days == 25 || background.equalsIgnoreCase("Christmas")) {
             cl.setBackgroundResource(R.drawable.christmas_bg);
             background = "Christmas";
-        }
-        else if (month == 9 && days == 31 || background.equalsIgnoreCase("Halloween")) {
+        } else if (month == 9 && days == 31 || background.equalsIgnoreCase("Halloween")) {
             cl.setBackgroundResource(R.drawable.halloween_bg);
             background = "Halloween";
-        }
-        else if (month == 10 || background.equalsIgnoreCase("Fall")) {
+        } else if (month == 10 || background.equalsIgnoreCase("Fall")) {
             cl.setBackgroundResource(R.drawable.fall_bg);
             background = "Fall";
         }
@@ -91,6 +89,10 @@ public class CountdownActivity extends AppCompatActivity {
         else if (month == 3 && days == 1 || background.equalsIgnoreCase("Easter")) {
             cl.setBackgroundResource(R.drawable.easter_bg);
             background = "Easter";
+        }
+        else if (timerName.matches(".*[bB]irthday.*")) {
+            cl.setBackgroundResource(R.drawable.birthday);
+            background = "Birthday";
         } else {
             //It's not one of the cool holidays, so the user sees a default background.
         }

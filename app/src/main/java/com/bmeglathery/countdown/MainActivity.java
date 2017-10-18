@@ -23,6 +23,12 @@ import java.util.GregorianCalendar;
  * creates an intent with extras from date and time pickers. The
  * intent is used in launching a new activity to display a countdown.
  *
+ * Added feature: If the user selects Halloween, Easter, or Christmas
+ * as their selected date, a holiday appropriate background is shown.
+ * If the user selects a date in November, a Fall-themed background is
+ * shown. Lastly, if the user includes the word "birthday" in their timer
+ * name, a birthday background is shown!
+ *
  * @author Brandon Meglathery
  */
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get saved timer information - if none available, default values are provided.
         SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+
         timer1 = new TimerState(
                 preferences.getString("TIMER_NAME1", DEFAULT_TIMER_NAME),
                 preferences.getLong("EVENT_TARGET1", 0),
@@ -106,14 +113,21 @@ public class MainActivity extends AppCompatActivity {
         int timer_request = 0;
         int selectedTimer = rg.getCheckedRadioButtonId();
 
-        if(selectedTimer == R.id.rb1)
+        String timerName = "";
+
+        if(selectedTimer == R.id.rb1) {
             timer_request = TIMER_1;
-        else if (selectedTimer == R.id.rb2)
+            timerName = timer1.getTimerName();
+        }else if (selectedTimer == R.id.rb2) {
             timer_request = TIMER_2;
-        else if (selectedTimer == R.id.rb3)
+            timerName = timer2.getTimerName();
+        }else if (selectedTimer == R.id.rb3) {
             timer_request = TIMER_3;
-        else
+            timerName = timer3.getTimerName();
+        }else
             Log.d(DEBUG, "selected radio button did not match radioButton id");
+
+        intent.putExtra(TIMER_NAME, timerName);
 
         startActivityForResult(intent, timer_request);
     }
@@ -219,28 +233,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("BACKGROUND3", timer3.getHolidayBackground());
 
         editor.apply();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 }
