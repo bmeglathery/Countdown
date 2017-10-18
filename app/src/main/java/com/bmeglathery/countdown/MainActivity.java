@@ -29,6 +29,9 @@ import java.util.GregorianCalendar;
  * shown. Lastly, if the user includes the word "birthday" in their timer
  * name, a birthday background is shown!
  *
+ * All backgrounds are my original designs, except for the stock photo for
+ * the birthday background.
+ *
  * @author Brandon Meglathery
  */
 public class MainActivity extends AppCompatActivity {
